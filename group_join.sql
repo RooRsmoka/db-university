@@ -22,13 +22,31 @@ GROUP BY `department_id`;
 
 
 --Selezionare tutti gli studenti iscritti al Corso di Laurea in Economia.
-
+SELECT `students`.`id`, `students`.`degree_id` , `students`.`name`, `students`.`surname`,
+       `degrees`.`name`, `degrees`.`level`
+FROM `students`
+INNER JOIN `degrees`
+	ON `students`.`degree_id` = `degrees`.`id`
+WHERE `degrees`.`name` = "corso di laurea in economia";
+-- oppure WHERE `students`.`degree_id` = 53; 53 => è il numero identificativo del corso di laurea in economia.
 
 --Selezionare tutti i Corsi di Laurea del Dipartimento di Neuroscienze.
-
+SELECT `degrees`.`id`, `degrees`.`name`, `degrees`.`level`,
+	   `departments`.`id`, `departments`.`name`
+FROM `degrees`
+INNER JOIN `departments`
+	ON `degrees`.`department_id` = `departments`.`id`
+WHERE `departments`.`name` LIKE "%neuro%";
 
 --Selezionare tutti i corsi in cui insegna Fulvio Amato. (id=44)
-
+SELECT `courses`.`id`, `courses`.`name`, `courses`.`period`, `courses`.`year`,
+	   `teachers`.`id`, `teachers`.`name`, `teachers`.`surname`
+FROM `courses`
+JOIN `course_teacher`
+	ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `teachers`
+	ON `course_teacher`.`teacher_id` = `teachers`.`id`
+WHERE `teachers`.`id` = 44
 
 --Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e nome.
 
